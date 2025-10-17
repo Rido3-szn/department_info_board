@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Department Events | FUTO Student Board</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <img src="./assets/Images/logo.png" alt="FUTO Logo" />
+      <h2>Student Portal</h2>
+    </div>
+    <nav>
+      <a href="student-dashboard.html">Dashboard</a>
+      <a href="announcements.html">Announcements</a>
+      <a href="result.html">Results</a>
+      <a href="event.html" class="active">Events</a>
+      <a href="archive.html" class="active">Archive</a>
+      <a href="index.html">Home</a>
+      <a href="student-login.html" class="logout">Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="dashboard-content">
+    <header class="dash-header">
+      <button id="menu-btn" class="menu-btn">☰</button>
+      <div class="profile-section">
+        <h1>Department Events</h1>
+        <button id="profile-btn" class="profile-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" />
+        </button>
+      </div>
+    </header>
+
+    <section class="events-page" id="events-page">
+      <h2>Upcoming Departmental Events</h2>
+      <div id="events-container" class="announcement-list"></div>
+    </section>
+  </main>
+
+  <!-- Profile Modal -->
+  <div id="profile-modal" class="profile-modal">
+    <div class="profile-modal-content">
+      <span id="close-profile" class="close-profile">&times;</span>
+      <h2>Student Profile</h2>
+      <div class="profile-info">
+        <p><strong>Name:</strong> <span id="profile-name">N/A</span></p>
+        <p><strong>Matric Number:</strong> <span id="profile-matric">N/A</span></p>
+        <p><strong>Department:</strong> Computer Science</p>
+        <p><strong>Level:</strong> 400 Level</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/scripts/script.js"></script>
+</body>
+</html>

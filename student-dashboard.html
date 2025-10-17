@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard - Departmental Info Board</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="./assets/Images/logo.png" alt="FUTO Logo" />
+      <h2>Student Portal</h2>
+    </div>
+    <nav>
+      <a href="announcements.html" class="active">Announcements</a>
+      <a href="#events">Events</a>
+      <a href="result.html">Results</a>
+      <a href="archive.html" class="active">Archive</a>
+      <a href="Index.html">Back to Home</a>
+      <a href="student-login.html" class="logout">Logout</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-content">
+    <header class="dash-header">
+      <button id="menu-btn" class="menu-btn">☰</button>
+    
+      <div class="profile-section">
+        <h1 id="student-greeting">Dashboard</h1>
+        <button id="profile-btn" class="profile-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" />
+        </button>
+      </div>
+    </header>
+    
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="profile-modal">
+      <div class="profile-modal-content">
+        <span id="close-profile" class="close-profile">&times;</span>
+        <h2>Student Profile</h2>
+        <div class="profile-info">
+          <p><strong>Name:</strong> <span id="profile-name">N/A</span></p>
+          <p><strong>Matric Number:</strong> <span id="profile-matric">N/A</span></p>
+        </div>
+      </div>
+    </div>    
+
+    <section id="announcements" class="dash-section">
+      <h2>Recent Announcements</h2>
+      <div id="dash-announcements" class="card-container"></div>
+    </section>
+
+    <section id="events" class="dash-section">
+      <h2>Upcoming Events</h2>
+      <div id="dash-events" class="card-container"></div>
+    </section>
+
+    <section id="results" class="dash-section">
+      <h2>Recent Results</h2>
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="./assets/scripts/script.js"></script>
+</body>
+</html>

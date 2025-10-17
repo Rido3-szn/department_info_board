@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Departmental Student Information Board</title>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="./assets/Images/logo.png" alt="FUTO Logo">
+      <h3>Deptartmment Info Board</h3>
+    </div>
+
+    <nav class="navbar">
+      <div class="logo" id="Dashboard"> <span></span>Dashboard <span></span></div>
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <ul id="nav-links" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#announcements.html">Announcements</a>
+        <a href="#event.html">Events</a></li>
+        <a href="student-login.html">Student Login</a>
+        <a href="admin-login.html">Admin Login</a>
+      </ul>
+    </nav>
+    
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <h2>Welcome to the Departmental Information Board</h2>
+      <p>Stay updated with announcements, timetables, and upcoming events.</p>
+    </div>
+  </section>
+
+  <!-- Announcements -->
+  <section class="container">
+    <h2>Latest Announcements</h2>
+    <div id="announcement-list" class="card-container"></div>
+  </section>
+
+  <!-- Events -->
+  <section id="events" class="container">
+    <h2>Upcoming Events</h2>
+    <div id="event-list" class="card-container"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Department of Computer Science, FUTO. All rights reserved.</p>
+  </footer>
+
+  <script src="./assets/scripts/script.js"></script>
+</body>
+</html>
