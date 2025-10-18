@@ -1,4 +1,4 @@
-
+<?php include("./auth-check.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,23 +31,27 @@
     
       <div class="profile-section">
         <h1 id="student-greeting">Dashboard</h1>
-        <button id="profile-btn" class="profile-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" />
         </button>
       </div>
+<div>    
+<!-- Profile Button (Top-right corner or header) -->
+<button id="profile-btn" class="profile-btn">
+  <span id="profile-initials">RD</span>
+</button>
+
+<!-- PROFILE MODAL -->
+<div id="profile-modal">
+  <div class="profile-box">
+    <button id="close-profile">&times;</button>
+    <h2 id="profile-name">John Doe</h2>
+    <p id="profile-email">Email: johndoe@example.com</p>
+    <p id="profile-matric">Matric: FUTO/12345</p>
+    <p id="profile-role">Role: Student</p>
+  </div>
+</div>
+
     </header>
-    
-    <!-- Profile Modal -->
-    <div id="profile-modal" class="profile-modal">
-      <div class="profile-modal-content">
-        <span id="close-profile" class="close-profile">&times;</span>
-        <h2>Student Profile</h2>
-        <div class="profile-info">
-          <p><strong>Name:</strong> <span id="profile-name">N/A</span></p>
-          <p><strong>Matric Number:</strong> <span id="profile-matric">N/A</span></p>
-        </div>
-      </div>
-    </div>    
+
 
     <section id="announcements" class="dash-section">
       <h2>Recent Announcements</h2>

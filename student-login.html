@@ -1,270 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Login | Info Board</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* ===== GENERAL STYLING ===== */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8f9fb;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login / Sign Up | Student Info Board</title>
+<style>
+/* ===== GENERAL ===== */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f0f4f0;
+  margin: 0; padding: 0;
+}
 
-    /* ===== NAVBAR ===== */
-    .navbar {
-      background: #316600;
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-    }
-    .logo {
-      font-weight: bold;
-      font-size: 20px;
-    }
+/* ===== NAVBAR ===== */
+.navbar {
+  background: #316600;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+}
+.navbar .logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+.nav-links {
+  display: flex; gap: 15px;
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+}
+.nav-links a:hover {
+  text-decoration: underline;
+}
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+@media (max-width:768px){
+  .menu-toggle { display: block; }
+  .nav-links { 
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 60px;
+    background: #316600;
+    flex-direction: column;
+    border-radius: 6px;
+    padding: 10px;
+  }
+  .nav-links.show { display: flex; }
+}
 
-    .nav-links {
-      display: flex;
-      gap: 15px;
-    }
+/* ===== AUTH CONTAINER ===== */
+.auth-container {
+  max-width: 420px;
+  margin: 60px auto;
+  background: #fff;
+  border-radius: 15px;
+  padding: 40px 35px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
-      transition: 0.3s;
-    }
+/* Toggle buttons */
+.auth-toggle {
+  display: flex; justify-content: center; gap: 10px;
+  margin-bottom: 25px;
+}
+.auth-toggle button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  background-color: #e5e5e5;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.auth-toggle button.active {
+  background-color: #316600;
+  color: #fff;
+}
 
-    .nav-links a:hover {
-      text-decoration: underline;
-    }
+/* ===== FORM ===== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.auth-form.hidden { display: none; }
 
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-    }
+.auth-form input,
+.auth-form select {
+  width: 95%;
+  padding: 12px 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.auth-form input:focus,
+.auth-form select:focus {
+  border-color: #316600;
+  box-shadow: 0 0 6px rgba(49, 102, 0, 0.3);
+  outline: none;
+}
 
-    /* ===== AUTH CONTAINER ===== */
-    .auth-container {
-      max-width: 400px;
-      margin: 80px auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+/* Password toggle */
+.pw-toggle {
+  position: relative;
+}
+.pw-toggle span {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #316600;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  user-select: none;
+}
 
-    .auth-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
+/* Submit button */
+button[type="submit"] {
+  width: 100%;
+  background: #316600;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button[type="submit"]:hover {
+  background: #274d00;
+}
 
-    .auth-buttons button {
-      flex: 1;
-      padding: 10px;
-      margin: 0 5px;
-      background: #ddd;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
+/* ===== TOAST (NOTIFICATION) ===== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #316600;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(30px);
+  pointer-events: none;
+  transition: opacity 0.4s, transform 0.4s;
+  z-index: 999;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.toast.error { background: #b00020; }
 
-    .auth-buttons button.active {
-      background: #316600;
-      color: #fff;
-    }
+@media(max-width:600px){
+  .toast {
+    bottom: auto;
+    top: 20px;
+    right: 50%;
+    transform: translate(50%, -30px);
+  }
+  .toast.show {
+    transform: translate(50%, 0);
+  }
+  .auth-container{
+       margin: 60px 60px;
+  }
+}
 
-    .auth-form {
-      display: none;
-    }
 
-    .auth-form.active {
-      display: block;
-    }
-
-    .auth-form h2 {
-      text-align: center;
-      color: #316600;
-    }
-
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: 500;
-    }
-
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    button[type="submit"] {
-      margin-top: 15px;
-      background: #316600;
-      color: #fff;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button[type="submit"]:hover {
-      background: #316600;
-    }
-
-    /* ===== RESPONSIVE NAV ===== */
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
-      .nav-links {
-        display: none;
-        position: absolute;
-        right: 15px;
-        top: 60px;
-        background: #316600;
-        flex-direction: column;
-        border-radius: 6px;
-        padding: 10px;
-      }
-      .nav-links.show {
-        display: flex;
-      }
-    }
-  </style>
+</style>
 </head>
-
 <body>
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar">
-    <div class="logo">Student Info Board</div>
-    <button id="menu-toggle" class="menu-toggle">☰</button>
-    <div id="nav-links" class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="student-login.html">Login</a>
-    </div>
-  </nav>
 
-  <!-- ===== AUTH BOX ===== -->
-  <div class="auth-container">
-    <div class="auth-buttons">
-      <button id="show-login" class="active">Login</button>
-      <button id="show-signup">Sign Up</button>
-    </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">Student Info Board</div>
+  <button id="menu-toggle" class="menu-toggle">☰</button>
+  <div id="nav-links" class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="student-login.html">Login</a>
+  </div>
+</nav>
 
-    <!-- Login Form -->
-    <form id="student-login-form" class="auth-form active">
-      <h2>Student Login</h2>
-      <label for="matric">Matric Number</label>
-      <input type="text" id="matric" placeholder="Enter your matric number" required />
-      <label for="password">Password</label>
-      <input type="password" id="Password" placeholder="Enter your Password" required />
-      <button type="submit">Login</button>
-    </form>
-
-    <!-- Signup Form -->
-    <form id="student-signup-form" class="auth-form">
-      <h2>Create Account</h2>
-      <label for="name">Full Name</label>
-      <input type="text" id="name" placeholder="Enter your full name" required />
-
-      <label for="newMatric">Matric Number</label>
-      <input type="text" id="newMatric" placeholder="Enter your matric number" required />
-
-      <label for="Department">Matric Number</label>
-      <input type="text" id="Department" placeholder="Enter your Department (i.e CSC)" required />
-
-      <label for="password">Password</label>
-      <input type="password" id="Password" placeholder="Enter your Password" required />
-
-      <button type="submit">Sign Up</button>
-    </form>
+<!-- AUTH CONTAINER -->
+<div class="auth-container">
+  <div class="auth-toggle">
+    <button id="login-toggle" class="active">Login</button>
+    <button id="signup-toggle">Sign Up</button>
   </div>
 
-  <!-- ===== JS LOGIC ===== -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      console.log("✅ Auth Page Loaded");
+  <!-- LOGIN FORM -->
+  <form id="login-form" class="auth-form">
+    <input type="email" name="email" placeholder="Email" required>
+    <div class="pw-toggle">
+      <input type="password" name="password" placeholder="Password" required>
+      <span id="login-pw-toggle">Show</span>
+    </div>
+    <button type="submit">Login</button>
+  </form>
 
-      /* === NAV MENU TOGGLE === */
-      const menuToggle = document.getElementById("menu-toggle");
-      const navLinks = document.getElementById("nav-links");
-      if (menuToggle && navLinks) {
-        menuToggle.addEventListener("click", (e) => {
-          e.stopPropagation();
-          navLinks.classList.toggle("show");
-        });
-        document.addEventListener("click", (e) => {
-          if (!navLinks.contains(e.target) && e.target !== menuToggle) {
-            navLinks.classList.remove("show");
-          }
-        });
-      }
+  <!-- SIGNUP FORM -->
+  <form id="signup-form" class="auth-form hidden" method="POST" action="backend/signup.php">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="text" name="matric" placeholder="Matric Number (Optional)">
+    <select name="role" required>
+      <option value="">Select Role</option>
+      <option value="student">Student</option>
+      <option value="admin">Admin</option>
+    </select>
+    <div class="pw-toggle">
+      <input type="password" name="password" placeholder="Password" required>
+      <span id="signup-pw-toggle">Show</span>
+    </div>
+    <button type="submit">Sign Up</button>
+  </form>
+</div>
 
-      /* === LOGIN ↔ SIGNUP TOGGLE === */
-      const showLoginBtn = document.getElementById("show-login");
-      const showSignupBtn = document.getElementById("show-signup");
-      const loginForm = document.getElementById("student-login-form");
-      const signupForm = document.getElementById("student-signup-form");
+<!-- TOAST BOX -->
+<div id="toast" class="toast"></div>
 
-      if (showLoginBtn && showSignupBtn && loginForm && signupForm) {
-        showLoginBtn.addEventListener("click", () => {
-          showLoginBtn.classList.add("active");
-          showSignupBtn.classList.remove("active");
-          loginForm.classList.add("active");
-          signupForm.classList.remove("active");
-        });
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  // ===== TOAST FUNCTION =====
+  const toast=document.getElementById("toast");
+  function showToast(message,type="success"){
+    toast.textContent=message;
+    toast.className="toast show";
+    if(type==="error"){ toast.classList.add("error"); }
+    else{ toast.classList.remove("error"); }
+    setTimeout(()=>{ toast.classList.remove("show"); },3000);
+  }
 
-        showSignupBtn.addEventListener("click", () => {
-          showSignupBtn.classList.add("active");
-          showLoginBtn.classList.remove("active");
-          signupForm.classList.add("active");
-          loginForm.classList.remove("active");
-        });
-      }
+  // ===== TOGGLE FORMS =====
+  const loginToggle=document.getElementById("login-toggle");
+  const signupToggle=document.getElementById("signup-toggle");
+  const loginForm=document.getElementById("login-form");
+  const signupForm=document.getElementById("signup-form");
 
-      /* === SIMULATED LOGIN / SIGNUP === */
-      const loginBox = document.getElementById("student-login-form");
-      const signupBox = document.getElementById("student-signup-form");
+  loginToggle.addEventListener("click", ()=>{
+    loginForm.classList.remove("hidden");
+    signupForm.classList.add("hidden");
+    loginToggle.classList.add("active");
+    signupToggle.classList.remove("active");
+  });
+  signupToggle.addEventListener("click", ()=>{
+    signupForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+    signupToggle.classList.add("active");
+    loginToggle.classList.remove("active");
+  });
 
-      if (loginBox) {
-        loginBox.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const matric = document.getElementById("matric").value.trim();
-          if (!matric) return alert("Enter matric number");
-          localStorage.setItem("studentMatric", matric);
-          window.location.href = "student-dashboard.html";
-        });
-      }
-
-      if (signupBox) {
-        signupBox.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const name = document.getElementById("name").value.trim();
-          const matric = document.getElementById("newMatric").value.trim();
-          if (!name || !matric) return alert("Fill all signup fields");
-          localStorage.setItem("studentName", name);
-          localStorage.setItem("studentMatric", matric);
-          alert("Signup successful! Redirecting to dashboard...");
-          window.location.href = "student-dashboard.html";
-        });
+  // ===== PASSWORD TOGGLE =====
+  function setupPwToggle(pwInputSelector, toggleSelector){
+    const pwInput=document.querySelector(pwInputSelector);
+    const toggle=document.querySelector(toggleSelector);
+    toggle?.addEventListener("click", ()=>{
+      if(pwInput.type==="password"){
+        pwInput.type="text";
+        toggle.textContent="Hide";
+      } else {
+        pwInput.type="password";
+        toggle.textContent="Show";
       }
     });
-  </script>
+  }
+  setupPwToggle("#login-form input[name='password']", "#login-pw-toggle");
+  setupPwToggle("#signup-form input[name='password']", "#signup-pw-toggle");
+
+  // ===== HELPER: GET/SET USERS =====
+  function getUsers(){
+    return JSON.parse(localStorage.getItem("users") || "[]");
+  }
+  function saveUsers(users){
+    localStorage.setItem("users", JSON.stringify(users));
+  }
+
+ // ===== SIGNUP =====
+signupForm.addEventListener("submit", e=>{
+  e.preventDefault();
+  const name = signupForm.name.value.trim();
+  const email = signupForm.email.value.trim();
+  const matric = signupForm.matric.value.trim();
+  const role = signupForm.role.value;
+  const password = signupForm.password.value.trim();
+
+  // Basic required fields check
+  if (!name || !email || !role || !password) {
+    return showToast("Please fill in all required fields.","error");
+  }
+
+  // Password strength check
+  const strongPassword = /^(?=.*[0-9]).{8,}$/;
+  if (!strongPassword.test(password)) {
+    return showToast("Password must be at least 8 characters long and include a number.","error");
+  }
+
+  // Get stored users
+  let users = getUsers();
+  if (users.find(u => u.email === email)) {
+    return showToast("Account already exists. Please log in.","error");
+  }
+
+  // Save new user
+  users.push({ name, email, matric, role, password });
+  saveUsers(users);
+  showToast("Signup successful! Redirecting...");
+
+  setTimeout(()=>{
+    if(role === "student") window.location.href = "student-dashboard.html";
+    else window.location.href = "admin-dashboard.html";
+  },1500);
+});
+
+
+  // ===== LOGIN =====
+  loginForm.addEventListener("submit", e=>{
+    e.preventDefault();
+    const email=loginForm.email.value.trim();
+    const password=loginForm.password.value.trim();
+
+    const users=getUsers();
+    const user=users.find(u=>u.email===email && u.password===password);
+
+    if(!user){
+      return showToast("No account found. Please sign up first.","error");
+    }
+
+    localStorage.setItem("activeUser", JSON.stringify(user));
+    showToast("Login successful! Redirecting...");
+
+    setTimeout(()=>{
+      if(user.role==="student") window.location.href="student-dashboard.html";
+      else window.location.href="admin-dashboard.html";
+    },1500);
+  });
+});
+</script>
+
 </body>
 </html>

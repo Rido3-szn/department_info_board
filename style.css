@@ -46,7 +46,7 @@ body {
 /* HERO */
 .hero {
   background:linear-gradient(rgba(27, 129, 1, 0.7), rgba(8, 102, 0, 0.733)),
-  url("../Images/campus.jpg") center/cover;
+  url("./Images/campus.jpg") center/cover;
   color:white;
   text-align:center;
   padding:80px 20px;
@@ -133,7 +133,7 @@ footer {
   align-items:center;
   min-height:80vh;
   background: linear-gradient(rgba(27, 129, 1, 0.7), rgba(8, 102, 0, 0.733)),
-  url("../Images/campus.jpg") center/cover;
+  url("./Images/campus.jpg") center/cover;
   padding:20px;
 }
 
@@ -565,4 +565,230 @@ footer {
     display: flex;
     gap: 20px;
   }
+}
+.profile-btn {
+  background: #ffffff;
+  color: #316600;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}
+/* ===== PROFILE MODAL OVERLAY ===== */
+#profile-modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55); /* blurred backdrop */
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(3px);
+}
+
+/* ===== MODAL BOX ===== */
+.profile-box {
+  background: #fff;
+  padding: 32px 26px;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  animation: slideInCenter 0.35s ease;
+  position: relative;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Slide-in from center (desktop) */
+@keyframes slideInCenter {
+  from {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== CLOSE BUTTON ===== */
+#close-profile {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 26px;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+#close-profile:hover {
+  color: #316600;
+}
+
+/* ===== PROFILE HEADER ===== */
+#profile-initials {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #316600, #4CAF50);
+  color: white;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  margin: 0 auto 15px;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(49, 102, 0, 0.25);
+}
+
+/* ===== PROFILE INFO ===== */
+#profile-name {
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+#profile-email,
+#profile-matric,
+#profile-role {
+  font-size: 15px;
+  color: #555;
+  margin: 4px 0;
+}
+
+/* ====== MOBILE SLIDE-UP SHEET STYLE ====== */
+@media (max-width: 600px) {
+  #profile-modal {
+    align-items: flex-end; /* push to bottom */
+  }
+
+  .profile-box {
+    width: 100%;
+    max-width: none;
+    border-radius: 18px 18px 0 0;
+    padding: 25px 20px 35px;
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  #close-profile {
+    top: 12px;
+    right: 15px;
+    font-size: 24px;
+  }
+}
+/* Profile Icon Button */
+.profile-icon-btn {
+  background: #316600;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  color: white;
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.profile-icon-btn:hover {
+  background: #316600;
+}
+
+/* Modal Background */
+.profile-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Box */
+.profile-box {
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px 40px;
+  width: 320px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.profile-box .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+}
+
+.profile-box .close-btn:hover {
+  color: #ff4d4d;
+}
+
+/* Avatar Icon */
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-avatar i {
+  font-size: 65px;
+  color: #004aad;
+}
+
+/* Profile Info */
+.profile-box h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+  color: #222;
+}
+
+.profile-box p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 15px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

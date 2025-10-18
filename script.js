@@ -37,34 +37,67 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* -----------------------
-     PROFILE MODAL
-     ----------------------- */
-  function initProfileModal() {
-    const profileBtn = $("#profile-btn");
-    const modal = $("#profile-modal");
-    const closeBtn = $("#close-profile");
-    const profileName = $("#profile-name");
-    const profileMatric = $("#profile-matric");
+ /* -----------------------
+   PROFILE MODAL + INITIALS
+----------------------- */
+function initProfile() {
+  const profileBtn = document.getElementById("profile-btn");
+  const profileModal = document.getElementById("profile-modal");
+  const closeProfile = document.getElementById("close-profile");
+  const profileName = document.getElementById("profile-name");
+  const profileEmail = document.getElementById("profile-email");
+  const profileMatric = document.getElementById("profile-matric");
+  const profileRole = document.getElementById("profile-role");
+  const profileInitials = document.getElementById("profile-initials");
 
-    if (!profileBtn || !modal) return;
+  // Get user from localStorage
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
 
+  // Only restrict dashboard or profile pages
+const restrictedPages = ["student-dashboard.html", "admin-dashboard.html"];
+const currentPage = window.location.pathname.split("/").pop();
+
+if (restrictedPages.includes(currentPage) && !activeUser) {
+  alert("Please log in first.");
+  window.location.href = "student-login.html";
+  return;
+}
+
+
+  // Populate modal
+  if (profileName) profileName.textContent = activeUser.name || "Unknown User";
+  if (profileEmail) profileEmail.textContent = `Email: ${activeUser.email || "N/A"}`;
+  if (profileMatric) profileMatric.textContent = `Matric: ${activeUser.matric || "N/A"}`;
+  if (profileRole) profileRole.textContent = `Role: ${activeUser.role || "Student"}`;
+
+  // Generate initials
+  if (profileInitials && activeUser.name) {
+    const initials = activeUser.name
+      .split(" ")
+      .map(word => word[0].toUpperCase())
+      .slice(0, 2)
+      .join("");
+    profileInitials.textContent = initials;
+  }
+
+  // Modal toggle logic
+  if (profileBtn && profileModal && closeProfile) {
     profileBtn.addEventListener("click", () => {
-      const name = localStorage.getItem("studentName") || "John Doe";
-      const matric = localStorage.getItem("studentMatric") || "FUTO/CSC/25/001";
-      if (profileName) profileName.textContent = name;
-      if (profileMatric) profileMatric.textContent = matric;
-      modal.style.display = "flex";
+      profileModal.style.display = "flex";
     });
 
-    closeBtn?.addEventListener("click", () => {
-      modal.style.display = "none";
+    closeProfile.addEventListener("click", () => {
+      profileModal.style.display = "none";
     });
 
     window.addEventListener("click", (e) => {
-      if (e.target === modal) modal.style.display = "none";
+      if (e.target === profileModal) {
+        profileModal.style.display = "none";
+      }
     });
   }
+}
+
 
   /* -----------------------
      HOMEPAGE: Announcements & Events
@@ -151,9 +184,6 @@ function initHomepage() {
     const studentName = localStorage.getItem("studentName");
     const studentMatric = localStorage.getItem("studentMatric");
 
-    if (dashHeader && (studentName || studentMatric)) {
-      dashHeader.textContent = `Welcome, ${studentName || studentMatric}`;
-    }
 
     // Announcements
     if (dashAnn) {
@@ -407,13 +437,13 @@ function initHomepage() {
      ----------------------- */
   initTopNavToggle();
   initSidebarToggle();
-  initProfileModal();
   initHomepage();
   initDashboard();
   initAnnouncementsPage();
   initEventsPage();
   initArchivePage();
   initResultsPage();
+   initProfile();
 
   console.log("🚀 All modules initialized successfully");
 });
